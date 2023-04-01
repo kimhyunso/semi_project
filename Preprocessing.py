@@ -2,7 +2,8 @@ from sklearn.preprocessing import  OneHotEncoder, LabelEncoder
 import numpy as np
 import pandas as pd
 
-class Preprocessing():
+# 결측치 대체, Label_encoding등 컬럼에 대한 전처리 클래스
+class Preprocessing:
     # 컬럼들 안의 이상 값들
     na_values = ['$', '#VALUE!', '##', 'XNA', '@', '#', 'x', '&']
     # float데이터 인데, object로 되어있는 이상 컬럼들
@@ -22,14 +23,20 @@ class Preprocessing():
         del self.__pay_df['Default']
 
     # 결측치를 어떻게 할 것인가
-    def missing_value(self):
+    def missing_value(self, what='mean'):
         # object인 column들(카테고리)만 뽑기
-        object_columns = self.__pay_df.select_dtypes(include='object').columns
+        category_columns = self.__pay_df.select_dtypes(include='object').columns
         # object가 아닌 column들(연속형)만 뽑기
-        not_object_columns = self.__pay_df.select_dtypes(exclude='object').columns
-        # 
-        for column in not_object_columns:
-            self.__pay_df[column] = self.__pay_df[column].fillna(self.__pay_df[column].mean())
+        numerical_value = self.__pay_df.select_dtypes(exclude='object').columns
+        
+        if what == 'mean':
+            # 연속형 데이터의 평균값으로 결측치 대체
+            for column in numerical_value:
+                self.__pay_df[column] = self.__pay_df[column].fillna(self.__pay_df[column].mean())
+        # TODO:추가적으로 대체할 것들 추가하기!   
+        elif what == 'None':
+            pass
+
 
     # data를 리턴하는 함수
     def get_df(self):
