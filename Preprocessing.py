@@ -2,6 +2,7 @@ from sklearn.preprocessing import  OneHotEncoder, LabelEncoder
 import numpy as np
 import pandas as pd
 
+# 결측치 대체, Label_encoding등 컬럼에 대한 전처리 클래스
 class Preprocessing():
     # 컬럼들 안의 이상 값들
     na_values = ['$', '#VALUE!', '##', 'XNA', '@', '#', 'x', '&']
@@ -27,7 +28,7 @@ class Preprocessing():
         object_columns = self.__pay_df.select_dtypes(include='object').columns
         # object가 아닌 column들(연속형)만 뽑기
         not_object_columns = self.__pay_df.select_dtypes(exclude='object').columns
-        # 
+        # 연속형 데이터의 평균값으로 결측치 대체
         for column in not_object_columns:
             self.__pay_df[column] = self.__pay_df[column].fillna(self.__pay_df[column].mean())
 
