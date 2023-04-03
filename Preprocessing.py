@@ -30,9 +30,9 @@ class Preprocessing:
                    'Registration_Days', 'ID_Days', 'Score_Source_1' ,
                    'Score_Source_2', 'Score_Source_3', 'Social_Circle_Default', 'Phone_Change']
 
-        # 결측치 이상치로 대체하기
+        # 연속형 데이터 결측치 이상치로 대체하기
         for column in numerical_columns:
-            df[column] = df[column].fillna(-999)
+            self.__pay_df[column] = self.__pay_df[column].fillna(-999)
         
 
 
@@ -44,7 +44,12 @@ class Preprocessing:
                         'Own_House_Age', 'Mobile_Tag', 'Homephone_Tag', 'Workphone_Working', 
                         'Client_Family_Members', 'Cleint_City_Rating', 'Application_Process_Day', 'Application_Process_Hour', 'Credit_Bureau',]
 
+        # 범주형 데이터_object 이상치로 대체하기
+        for object_column in category_columns_object:
+            self.__pay_df[object_column] = self.__pay_df[object_column].fillna('###')
 
+
+        
 
     # data를 리턴하는 함수
     def get_df(self):
