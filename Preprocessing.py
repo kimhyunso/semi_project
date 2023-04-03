@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import random
 from sklearn.model_selection import train_test_split
+from imblearn.over_sampling import SMOTE
 
 
 
@@ -60,7 +61,9 @@ class Preprocessing:
 
     def train_split(self):
         train_x, test_x, train_y, test_y = train_test_split(test_size=0.2, random_state=42, stratify=self.__y_target)
+        smote = SMOTE(random_state=42)
 
+        X_train_over, y_train_over = smote.fit_sample(X_train, y_train)
 
     # data를 리턴하는 함수
     def get_df(self):
