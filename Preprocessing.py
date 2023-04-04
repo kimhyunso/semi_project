@@ -61,11 +61,6 @@ class Preprocessing:
         for column in numerical_columns:
             self.__pay_df[column] = self.__pay_df[column].fillna(self.__pay_df[column].mean())
 
-    def train_split(self):
-        train_x, test_x, train_y, test_y = train_test_split(test_size=0.2, random_state=42, stratify=self.__y_target)
-        smote = SMOTE(random_state=42)
-        X_train_over, y_train_over = smote.fit_sample(X_train, y_train)
-
     # data를 리턴하는 함수
     def get_df(self):
         return self.__pay_df
