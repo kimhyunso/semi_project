@@ -1,2 +1,5 @@
 *.psd filter=lfs diff=lfs merge=lfs -text
 *.csv filter=lfs diff=lfs merge=lfs -text
+*.pickle filter=lfs diff=lfs merge=lfs -text
+nbfi_vehicle_loan_repayment_dataset/x_train_over.pickle filter=lfs diff=lfs merge=lfs -text
+x_train_over.pickle filter=lfs diff=lfs merge=lfs -text
