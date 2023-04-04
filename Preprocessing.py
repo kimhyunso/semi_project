@@ -21,8 +21,8 @@ class Preprocessing:
         for column in self.columns:
             self.__pay_df[column] = pd.to_numeric(self.__pay_df[column], errors='coerce')
         # target data 분리
-        self.__y_target = self.__pay_df['Default']
-        del self.__pay_df['Default']
+        # self.__y_target = self.__pay_df['Default']
+        # del self.__pay_df['Default']
         # 특정 컬럼에 대한 결측치 처리
         self.__pay_df['Client_Occupation'].fillna('Nojob', inplace=True)
         self.__pay_df['Credit_Bureau'].fillna(self.__pay_df['Credit_Bureau'].mean(), inplace=True)
