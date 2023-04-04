@@ -21,8 +21,8 @@ class Preprocessing:
         for column in self.columns:
             self.__pay_df[column] = pd.to_numeric(self.__pay_df[column], errors='coerce')
         # target data 분리
-        self.__y_target = self.__pay_df['Default']
-        del self.__pay_df['Default']
+        # self.__y_target = self.__pay_df['Default']
+        # del self.__pay_df['Default']
         # 특정 컬럼에 대한 결측치 처리
         self.__pay_df['Client_Occupation'].fillna('Nojob', inplace=True)
         self.__pay_df['Credit_Bureau'].fillna(self.__pay_df['Credit_Bureau'].mean(), inplace=True)
@@ -30,7 +30,7 @@ class Preprocessing:
 
     def drop_columns(self):
         # 삭제할 column들
-        drop_columns = ['Own_House_Age', 'Type_Organization', 'Mobile_Tag', 'Score_Source_1', 'Score_Source_3', 'Social_Circle_Default']
+        drop_columns = ['Own_House_Age', 'Type_Organization', 'Mobile_Tag', 'Score_Source_1', 'Score_Source_3', 'Social_Circle_Default', 'Application_Process_Hour', 'Accompany_Client']
         self.__pay_df.drop(columns=drop_columns, axis=1, inplace=True)
 
     def category_columns_replace(self):
