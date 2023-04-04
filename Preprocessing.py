@@ -30,7 +30,7 @@ class Preprocessing:
 
     def drop_columns(self):
         # 삭제할 column들
-        drop_columns = ['Own_House_Age', 'Type_Organization', 'Mobile_Tag', 'Score_Source_1', 'Score_Source_3', 'Social_Circle_Default']
+        drop_columns = ['Own_House_Age', 'Type_Organization', 'Mobile_Tag', 'Score_Source_1', 'Score_Source_3', 'Social_Circle_Default', 'Application_Process_Hour', 'Accompany_Client']
         self.__pay_df.drop(columns=drop_columns, axis=1, inplace=True)
 
     def category_columns_replace(self):
