@@ -14,12 +14,9 @@ class Preprocessing:
     columns = ['Client_Income', 'Credit_Amount', 'Loan_Annuity', 'Score_Source_3', 'Population_Region_Relative', 'Age_Days', 'Employed_Days', 'Registration_Days', 'ID_Days']
     train_location = '/semi_project/nbfi_vehicle_loan_repayment_dataset/Train_Dataset.csv'
 
-
-
-
     def __init__(self):
         # csv파일 불러오는 과정 na_values안에 포함된 것들은 결측치로 대체
-        self.__pay_df.read_csv(
+        self.__pay_df = pd.read_csv(
         self.train_location,
         index_col='ID',
         na_values=na_values,
