@@ -21,16 +21,15 @@ class Preprocessing:
         for column in self.columns:
             self.__pay_df[column] = pd.to_numeric(self.__pay_df[column], errors='coerce')
         # target data 분리
-        self.__y_target = self.__pay_df['Default']
-        del self.__pay_df['Default']
+        # self.__y_target = self.__pay_df['Default']
+        # del self.__pay_df['Default']
         # 특정 컬럼에 대한 결측치 처리
         self.__pay_df['Client_Occupation'].fillna('Nojob', inplace=True)
         self.__pay_df['Credit_Bureau'].fillna(self.__pay_df['Credit_Bureau'].mean(), inplace=True)
 
-
     def drop_columns(self):
         # 삭제할 column들
-        drop_columns = ['Own_House_Age', 'Type_Organization', 'Mobile_Tag', 'Score_Source_1', 'Score_Source_3', 'Social_Circle_Default']
+        drop_columns = ['ID', 'Own_House_Age', 'Type_Organization', 'Mobile_Tag', 'Score_Source_1', 'Score_Source_3', 'Social_Circle_Default', 'Application_Process_Hour', 'Accompany_Client', 'Client_Income']
         self.__pay_df.drop(columns=drop_columns, axis=1, inplace=True)
 
     def category_columns_replace(self):
@@ -60,11 +59,6 @@ class Preprocessing:
 
         for column in numerical_columns:
             self.__pay_df[column] = self.__pay_df[column].fillna(self.__pay_df[column].mean())
-
-    def train_split(self):
-        train_x, test_x, train_y, test_y = train_test_split(test_size=0.2, random_state=42, stratify=self.__y_target)
-        smote = SMOTE(random_state=42)
-        X_train_over, y_train_over = smote.fit_sample(X_train, y_train)
 
     # data를 리턴하는 함수
     def get_df(self):
