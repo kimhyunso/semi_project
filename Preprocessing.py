@@ -35,7 +35,10 @@ class Preprocessing:
 
     def category_columns_replace(self):
         # object인 column들(카테고리)만 뽑기
-        category_columns_object = self.__pay_df.select_dtypes(include='object').columns
+        category_columns_object = [
+            'Client_Income_Type', 'Client_Education', 'Client_Marital_Status', 
+            'Client_Gender', 'Loan_Contract_Type', 'Client_Housing_Type', 
+            'Client_Occupation']
 
         # 결측치 0개 초과 10000개 미만의 데이터를 대상으로 랜덤하게 결측치 대체
         for column in category_columns_object:
@@ -44,18 +47,25 @@ class Preprocessing:
             unique_columns = self.__pay_df[column].loc[self.__pay_df[column].isna()==False].unique()
             self.__pay_df[column] = self.__pay_df[column].apply(lambda x : random.choice(unique_columns) if pd.isna(x) else x)
 
+        category_columns = [
+            'Car_Owned', 'Bike_Owned', 'Active_Loan', 
+            'House_Own', 'Homephone_Tag', 'Workphone_Working', 
+            'Cleint_City_Rating', 'Application_Process_Day', 'Client_Permanent_Match_Tag', 
+            'Client_Contact_Work_Tag']
+
         # 나머지 범주형 데이터에 대해 one-hot encoding 적용
         df_null_sum = self.__pay_df.isna().sum()
         column = df_null_sum[df_null_sum>0].index
-        self.__pay_df = pd.get_dummies(self.__pay_df, columns=column)
+        self.__pay_df = pd.get_dummies(self.__pay_df, columns=category_columns)
 
     # numerical_columns에 대해서 결측치를 어떻게 대체할 것인지        
     def numerical_columns_replace(self):
         # numerical_column들
-        numerical_columns = ['Credit_Amount', 'Loan_Annuity', 
-                   'Population_Region_Relative', 'Age_Days', 'Employed_Days',
-                   'Registration_Days', 'ID_Days',
-                   'Score_Source_2', 'Phone_Change', 'Client_Family_Members']
+        numerical_columns=[
+            'Child_Count', 'Credit_Amount', 'Loan_Annuity', 
+            'Population_Region_Relative', 'Age_Days', 'Employed_Days', 
+            'Registration_Days', 'ID_Days', 'Client_Family_Members',
+            'Score_Source_2', 'Phone_Change', 'Credit_Bureau']
 
         for column in numerical_columns:
             self.__pay_df[column] = self.__pay_df[column].fillna(self.__pay_df[column].mean())
