@@ -12,33 +12,14 @@ class Preprocessing:
     na_values = ['$', '#VALUE!', '##', 'XNA', '@', '#', 'x', '&']
     # float데이터 인데, object로 되어있는 이상 컬럼들
     columns = ['Client_Income', 'Credit_Amount', 'Loan_Annuity', 'Score_Source_3', 'Population_Region_Relative', 'Age_Days', 'Employed_Days', 'Registration_Days', 'ID_Days']
-    train_location = '/semi_project/nbfi_vehicle_loan_repayment_dataset/Train_Dataset.csv'
 
     def __init__(self):
         # csv파일 불러오는 과정 na_values안에 포함된 것들은 결측치로 대체
-        self.__pay_df = pd.read_csv(
-        self.train_location,
-        index_col='ID',
-        na_values=na_values,
-        dtype={
-            'Accompany_Client': 'category',
-            'Client_Income_Type': 'category',
-            'Client_Education': 'category',
-            'Client_Marital_Status': 'category',
-            'Client_Gender': 'category',
-            'Loan_Contract_Type': 'category',
-            'Client_Housing_Type': 'category',
-            'Client_Occupation': 'category',
-            'Type_Organization': 'category',
-            'Default': 'bool',
-        },
-        true_values=['Yes'],
-        false_values=['No'],
-    ).rename(
-        columns={
-            'Cleint_City_Rating':'Client_City_Rating',
-        }
-    )
+        self.__pay_df = pd.read_csv('./nbfi_vehicle_loan_repayment_dataset/Train_Dataset.csv', na_values=self.na_values, encoding='utf-8', engine='python')
+
+        # columns에 object로 되어있는 컬럼들을 float으로 변경
+        for column in self.columns:
+            self.__pay_df[column] = pd.to_numeric(self.__pay_df[column], errors='coerce')
         # target data 분리
         self.__y_target = self.__pay_df['Default']
         del self.__pay_df['Default']
@@ -74,7 +55,7 @@ class Preprocessing:
         numerical_columns = ['Credit_Amount', 'Loan_Annuity', 
                    'Population_Region_Relative', 'Age_Days', 'Employed_Days',
                    'Registration_Days', 'ID_Days',
-                   'Score_Source_2', 'Phone_Change']
+                   'Score_Source_2', 'Phone_Change', 'Client_Family_Members']
 
         for column in numerical_columns:
             self.__pay_df[column] = self.__pay_df[column].fillna(self.__pay_df[column].mean())
