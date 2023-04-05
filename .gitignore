@@ -406,4 +406,8 @@ pyrightconfig.json
 .history
 .ionide
 
+#big_data file
+over_dataset/*.*
+
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,jupyternotebooks,pycharm,django
+
