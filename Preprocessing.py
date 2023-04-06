@@ -2,8 +2,6 @@ import numpy as np
 import pandas as pd
 import random
 from sklearn.model_selection import train_test_split
-from imblearn.over_sampling import SMOTE
-
 
 
 # 결측치 대체, Label_encoding등 컬럼에 대한 전처리 클래스
